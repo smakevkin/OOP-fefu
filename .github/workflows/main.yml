@@ -6,22 +6,22 @@ on:
       - main
       - dev
 
-  jobs:
-    test:
-      name: test
-      runs-on: ubuntu-latest
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: install go
-          uses: actions/setup-go@v5
-          with:
-            go-version: '1.23.3'
+      - name: install go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.3'
         
-        - name: install dep
-          run: go get .
+      - name: install dep
+        run: go mod downloads
 
-        - name: build
-          run: go build -v ./...
+      - name: build
+        run: go build -v ./...
