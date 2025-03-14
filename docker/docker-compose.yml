@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17.4-alpine
+    container_name: postgres_db
+    env_file: "../.env"
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./storage:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  builder:
+    build:
+      context: '..'
+      dockerfile: ./docker/builder.Dockerfile
+    image: builder
+    container_name: builder
+    volumes:
+      - ../:/app
+    networks:
+      - app_network
+
+  app:
+    build:
+      context: '.'
+      dockerfile: ./app.Dockerfile
+    container_name: app
+    image: app
+    restart: on-failure:5
+    working_dir: /app
+    env_file: "../.env"
+    depends_on:
+      - builder
+      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+    name: app-network
