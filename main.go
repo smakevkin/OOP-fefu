@@ -1,7 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"oop/models"
+	"os"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	//cfg := config.MustLoad()
+
+	db, err := models.OpenDB(fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+	))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	//userModel, err := db.CreateUserTable()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 }
