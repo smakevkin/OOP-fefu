@@ -33,6 +33,11 @@ services:
     restart: on-failure:5
     working_dir: /app
     env_file: "../.env"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../config:/app/config
+      - ../internal:/app/internal
     depends_on:
       - builder
       - db
