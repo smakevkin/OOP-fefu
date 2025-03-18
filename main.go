@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
-	"oop/models"
+	"oop/internal/storage"
 	"os"
 )
 
 func main() {
 	//cfg := config.MustLoad()
 
-	db, err := models.OpenDB(fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	db, err := storage.OpenDB(fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("POSTGRES_USER"),

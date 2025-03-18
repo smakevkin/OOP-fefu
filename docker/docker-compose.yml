@@ -37,7 +37,6 @@ services:
       - "8080:8080"
     volumes:
       - ../config:/app/config
-      - ../internal:/app/internal
     depends_on:
       - builder
       - db
